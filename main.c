@@ -4,16 +4,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "sprites.c"
-
-
-BOOLEAN UpPressed = 0;
-BOOLEAN DownPressed = 0;
-BOOLEAN LeftPressed = 0;
-BOOLEAN RightPressed = 0;
-
-BOOLEAN Walking = 0;
-
-uint8_t playerDir = backward;
+#include "controls.c"
 
 int counter = 0;
 
@@ -91,48 +82,7 @@ void main(){
 
         joy = joy&0x0F; //get the relevant 4 bits
 
-        if (joypad() & J_UP)
-            UpPressed = 1;
-        else
-            UpPressed = 0;
-
-        if (joypad() & J_DOWN) 
-            DownPressed = 1;
-        else
-            DownPressed = 0;
-
-        if (joypad() & J_LEFT)
-            LeftPressed = 1;
-        else
-            LeftPressed = 0;
-
-        if (joypad() & J_RIGHT) 
-            RightPressed = 1;
-        else
-            RightPressed = 0;
-
-        if (UpPressed) {
-            playerDir = forward;
-            Walking = 1;
-            y--;
-        }
-        else if (DownPressed) {
-            playerDir = backward;
-            Walking = 1;
-            y++;
-        }
-        else if (LeftPressed) {
-            playerDir = left;
-            Walking = 1;
-            x--;
-        }
-        else if (RightPressed) {
-            playerDir = right;
-            Walking = 1;
-            x++;
-        }
-        else
-            Walking = 0;
+        HandleControls(joypad());
 
         shadow_OAM[0].x = x-4;
         shadow_OAM[0].y = y;
