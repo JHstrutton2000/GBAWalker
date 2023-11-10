@@ -17,6 +17,19 @@ BOOLEAN DownPressed  = 0;
 BOOLEAN LeftPressed  = 0;
 BOOLEAN RightPressed = 0;
 
+BOOLEAN Walking = 0;
+
+#define backwardStill   1
+#define leftStill       5
+#define rightStill      9
+#define forwardStill    13
+
+#define backwardWalk   17
+#define leftWalk       25
+#define rightWalk      33
+#define forwardWalk    41
+
+
 int counter = 0;
 
 void main(){
@@ -36,53 +49,36 @@ void main(){
 
     while(1){
         //if(playerDir != prevplayerDir){
-            if(playerDir == backward) {//0, 1, 2, 3 || 16, 17, 18, 19 down
-                if(counter < 5){
-                    shadow_OAM[0].tile = 1;
-                    shadow_OAM[1].tile = 2;
-                }
-                else{
-                    shadow_OAM[0].tile = 17;
-                    shadow_OAM[1].tile = 18;
-                }
+            if(playerDir == backward) {
+                if(counter < 5 || !Walking)
+                    shadow_OAM[0].tile = backwardStill;
+                else
+                    shadow_OAM[0].tile = backwardWalk;
             }
-            else if(playerDir == left) {//4, 5, 6, 7 || 24, 25, 26, 27 left
-                if(counter < 5){
-                    shadow_OAM[0].tile = 5;
-                    shadow_OAM[1].tile = 6;
-                }
-                else{
-                    shadow_OAM[0].tile = 25;
-                    shadow_OAM[1].tile = 26;
-                }
+            else if(playerDir == left) {
+                if(counter < 5 || !Walking)
+                    shadow_OAM[0].tile = leftStill;
+                else
+                    shadow_OAM[0].tile = leftWalk;
             }
-            else if(playerDir == right) {//8, 9, 10, 11 || 32, 33, 34, 35 right
-                if(counter < 5){
-                    shadow_OAM[0].tile = 9;
-                    shadow_OAM[1].tile = 10;
-                }
-                else{
-                    shadow_OAM[0].tile = 33;
-                    shadow_OAM[1].tile = 34;
-                }
+            else if(playerDir == right) {
+                if(counter < 5 || !Walking)
+                    shadow_OAM[0].tile = rightStill;
+                else
+                    shadow_OAM[0].tile = rightWalk;
             }
-            else if(playerDir == forward) {//12, 13, 14, 15 || 40, 41, 42, 43 up
-                if(counter < 5){
-                    shadow_OAM[0].tile = 13;
-                    shadow_OAM[1].tile = 14;
-                }
-                else{
-                    shadow_OAM[0].tile = 41;
-                    shadow_OAM[1].tile = 42;
-                }
+            else if(playerDir == forward) {
+                if(counter < 5 || !Walking)
+                    shadow_OAM[0].tile = forwardStill;
+                else
+                    shadow_OAM[0].tile = forwardWalk;
             }
+            shadow_OAM[1].tile = shadow_OAM[0].tile + 1;
 
             //0,   1,  2,  3 || 16, 17, 18, 19 down
             //4,   5,  6,  7 || 24, 25, 26, 27 left
             //8,   9, 10, 11 || 32, 33, 34, 35 right
             //12, 13, 14, 15 || 40, 41, 42, 43 up
-
-            playerDir = prevplayerDir;
         //}
 
         static uint8_t joy = 0;
@@ -112,22 +108,28 @@ void main(){
         else
             RightPressed = 0;
 
-        if(UpPressed){
+        if (UpPressed) {
             playerDir = forward;
+            Walking = 1;
             y--;
         }
-        else if(DownPressed){
+        else if (DownPressed) {
             playerDir = backward;
+            Walking = 1;
             y++;
         }
-        else if(LeftPressed){
+        else if (LeftPressed) {
             playerDir = left;
+            Walking = 1;
             x--;
         }
-        else if(RightPressed){
+        else if (RightPressed) {
             playerDir = right;
+            Walking = 1;
             x++;
         }
+        else
+            Walking = 0;
         
         // if(arrowDown == 1 && playerDir == forward)
         //     y--;

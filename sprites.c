@@ -1,12 +1,9 @@
-enum direction{
-  backward,
-  left,
-  forward,
-  right
-};
+#define backward 0x00
+#define left	 0x01
+#define forward  0x02
+#define right    0x03
 
-int playerDir = backward;
-int prevplayerDir = -1;
+uint8_t playerDir = backward;
 
 static int y = 60; //coordinates
 static int x = 60;
