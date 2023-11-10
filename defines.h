@@ -1,8 +1,10 @@
 //memory locations
-#define vram                0x8000
-#define pallets             0x9000
-#define tilemap             0x9800
-#define InputData           0xFF00
+#define VRAM                0x8000
+#define PALLETS             0x9000
+#define TILEMAPS            0x9800
+#define SRAM				0xA000
+#define RAM					0xC000
+#define IO				    0xFF00
 #define spriteAttributes    0xFE00
 #define requestData         0x0020
 

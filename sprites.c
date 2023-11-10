@@ -1,4 +1,4 @@
-unsigned char PlayerSprites[] =
+const unsigned char PlayerSprites[] =
 {
  0x00,0x00,0x07,0x07,0x08,0x0F,0x10,0x1F,
   0x16,0x1F,0x28,0x29,0x22,0x2A,0x12,0x1A,
@@ -90,7 +90,7 @@ unsigned char PlayerSprites[] =
   0x24,0xEC,0x38,0xF8,0xE0,0xE0,0xC0,0xC0
 };
 
-void updatePlayerRotation(void) {
+void updatePlayer(void) {
     if (playerDir == backward) {
         if (counter < 5 || !Walking)
             shadow_OAM[0].tile = backwardStill;
@@ -136,4 +136,10 @@ void updatePlayerRotation(void) {
     else {
         playerDir = none;
     }
+
+    shadow_OAM[0].x = x - 4;
+    shadow_OAM[0].y = y;
+
+    shadow_OAM[1].x = x + 4;
+    shadow_OAM[1].y = y;
 }
