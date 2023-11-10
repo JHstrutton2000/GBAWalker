@@ -1,6 +1,3 @@
-static int y = 60; //coordinates
-static int x = 60;
-
 unsigned char PlayerSprites[] =
 {
  0x00,0x00,0x07,0x07,0x08,0x0F,0x10,0x1F,
@@ -92,3 +89,51 @@ unsigned char PlayerSprites[] =
   0x10,0xF0,0x68,0xF8,0x04,0xFC,0x24,0xFC,
   0x24,0xEC,0x38,0xF8,0xE0,0xE0,0xC0,0xC0
 };
+
+void updatePlayerRotation(void) {
+    if (playerDir == backward) {
+        if (counter < 5 || !Walking)
+            shadow_OAM[0].tile = backwardStill;
+        else
+            shadow_OAM[0].tile = backwardWalk;
+    }
+    else if (playerDir == left) {
+        if (counter < 5 || !Walking)
+            shadow_OAM[0].tile = leftStill;
+        else
+            shadow_OAM[0].tile = leftWalk;
+    }
+    else if (playerDir == right) {
+        if (counter < 5 || !Walking)
+            shadow_OAM[0].tile = rightStill;
+        else
+            shadow_OAM[0].tile = rightWalk;
+    }
+    else if (playerDir == forward) {
+        if (counter < 5 || !Walking)
+            shadow_OAM[0].tile = forwardStill;
+        else
+            shadow_OAM[0].tile = forwardWalk;
+    }
+
+    if (playerDir)
+        shadow_OAM[1].tile = shadow_OAM[0].tile + 1;
+
+    if (playerDir == none && !Walking) {
+        if (shadow_OAM[0].tile == forwardWalk)
+            shadow_OAM[0].tile = forwardStill;
+        else if (shadow_OAM[0].tile == leftWalk)
+            shadow_OAM[0].tile = leftStill;
+        else if (shadow_OAM[0].tile == rightWalk)
+            shadow_OAM[0].tile = rightStill;
+        else if (shadow_OAM[0].tile == backwardWalk)
+            shadow_OAM[0].tile = backwardStill;
+
+        shadow_OAM[1].tile = shadow_OAM[0].tile + 1;
+
+        Walking = 0;
+    }
+    else {
+        playerDir = none;
+    }
+}
