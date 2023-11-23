@@ -11,15 +11,20 @@
 #define PlayerSpritesBank 0
 
 //locations of tiles loaded into vram
-#define backwardStill   1
-#define leftStill       5
-#define rightStill      9
-#define forwardStill    13
+#define backwardStill   0x01
+#define leftStill       0x05
+#define rightStill      0x09
+#define forwardStill    0x0D
 
-#define backwardWalk    17
-#define leftWalk        25
-#define rightWalk       33
-#define forwardWalk     41
+#define backwardWalk    0x11
+#define leftWalk        0x19
+#define rightWalk       0x21
+#define forwardWalk     0x29
+
+#define Enemyright      0x2C
+#define Enemyleft       0x2E
+#define Enemyforward    0x30
+#define Enemybackward   0x32
 
 //directions
 #define none	 0x00
@@ -27,3 +32,8 @@
 #define left	 0x02
 #define forward  0x03
 #define right    0x04
+
+#define playerSpeed 3
+#define enemySpeed  1
+
+#define charOffset 0x20

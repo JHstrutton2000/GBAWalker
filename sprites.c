@@ -90,30 +90,60 @@ const unsigned char PlayerSprites[] =
   0x24,0xEC,0x38,0xF8,0xE0,0xE0,0xC0,0xC0
 };
 
+const unsigned char Enemy[] =
+{
+  0x00,0x00,0x7E,0x7E,0x7B,0x45,0xFF,0xC1,
+  0xFE,0x8E,0xFC,0x84,0xEC,0x94,0xEC,0x94,
+  0xEC,0x94,0x7C,0x44,0x7C,0x44,0x7C,0x44,
+  0x7C,0x44,0x7C,0x44,0x44,0x7C,0x7C,0x7C,
+  0x00,0x00,0x7E,0x7E,0xDE,0xA2,0xFF,0x83,
+  0x7F,0x71,0x3F,0x21,0x37,0x29,0x37,0x29,
+  0x37,0x29,0x3E,0x22,0x3E,0x22,0x3E,0x22,
+  0x3E,0x22,0x3E,0x22,0x22,0x3E,0x3E,0x3E,
+  0x00,0x00,0x7E,0x7E,0x42,0x7E,0x42,0x7E,
+  0x5A,0x66,0x7E,0x42,0x5A,0x66,0x5A,0x66,
+  0x5A,0x66,0x7E,0x42,0x7E,0x42,0x7E,0x42,
+  0x7E,0x42,0x7E,0x42,0x42,0x7E,0x7E,0x7E,
+  0x00,0x00,0x7E,0x7E,0x7E,0x42,0x5A,0x66,
+  0x7E,0x42,0x7E,0x42,0x5A,0x66,0x5A,0x66,
+  0x5A,0x66,0x7E,0x42,0x7E,0x42,0x7E,0x42,
+  0x7E,0x42,0x7E,0x42,0x42,0x7E,0x7E,0x7E,
+  0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+  0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+  0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+  0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00
+};
+
 void updatePlayer(void) {
-    if (playerDir == backward) {
-        if (counter < 5 || !Walking)
-            shadow_OAM[0].tile = backwardStill;
-        else
-            shadow_OAM[0].tile = backwardWalk;
-    }
-    else if (playerDir == left) {
-        if (counter < 5 || !Walking)
-            shadow_OAM[0].tile = leftStill;
-        else
-            shadow_OAM[0].tile = leftWalk;
-    }
-    else if (playerDir == right) {
-        if (counter < 5 || !Walking)
-            shadow_OAM[0].tile = rightStill;
-        else
-            shadow_OAM[0].tile = rightWalk;
-    }
-    else if (playerDir == forward) {
-        if (counter < 5 || !Walking)
-            shadow_OAM[0].tile = forwardStill;
-        else
-            shadow_OAM[0].tile = forwardWalk;
+    switch (playerDir)
+    {
+        case backward:
+            if (counter < 5 || !Walking)
+                shadow_OAM[0].tile = backwardStill;
+            else
+                shadow_OAM[0].tile = backwardWalk;
+            break;
+        case left:
+            if (counter < 5 || !Walking)
+                shadow_OAM[0].tile = leftStill;
+            else
+                shadow_OAM[0].tile = leftWalk;
+            break;
+        case right:
+            if (counter < 5 || !Walking)
+                shadow_OAM[0].tile = rightStill;
+            else
+                shadow_OAM[0].tile = rightWalk;
+            break;
+        case forward:
+            if (counter < 5 || !Walking)
+                shadow_OAM[0].tile = forwardStill;
+            else
+                shadow_OAM[0].tile = forwardWalk;
+            break;
+        
+        default:
+            break;
     }
 
     if (playerDir)
@@ -137,9 +167,73 @@ void updatePlayer(void) {
         playerDir = none;
     }
 
-    shadow_OAM[0].x = x - 4;
-    shadow_OAM[0].y = y;
+    shadow_OAM[0].x = playerX - 4;
+    shadow_OAM[0].y = playerY;
 
-    shadow_OAM[1].x = x + 4;
-    shadow_OAM[1].y = y;
+    shadow_OAM[1].x = playerX + 4;
+    shadow_OAM[1].y = playerY;
+
+    if(running){
+        printPlayerHealth();
+    }
+}
+
+void printPlayerHealth(){
+    //memset((void*)TILEMAPS, 0x00, 36*36); //clear tilemap
+    //printf("%d", playerHealth);
+}
+
+void EnemyAttackPlayer(){
+
+}
+
+void EnemyfollowPlayer(){
+    int deltaX = constrain((playerX - enemyX), -enemySpeed, enemySpeed);
+    int deltaY = constrain((playerY - enemyY), -enemySpeed, enemySpeed);
+
+    if(deltaX > 0){
+        enemyDir = right;
+    }
+    else if(deltaX < 0){
+        enemyDir = left;
+    }
+    else if(deltaY > 0){
+        enemyDir = forward;
+    }
+    else if(deltaY < 0){
+        enemyDir = backward;
+    }
+
+    enemyX += deltaX;
+    enemyY += deltaY;
+}
+
+void updateEnemy(){
+    if(running){
+        EnemyfollowPlayer();
+    }
+    if((playerX - enemyX) < 1){
+        EnemyAttackPlayer();
+    }
+
+    switch (enemyDir)
+    {
+        case backward:
+            shadow_OAM[2].tile = Enemybackward;
+            break;
+        case left:
+            shadow_OAM[2].tile = Enemyleft;
+            break;
+        case right:
+            shadow_OAM[2].tile = Enemyright;
+            break;
+        case forward:
+            shadow_OAM[2].tile = Enemyforward;
+            break;
+        default:
+            break;
+    }
+
+    shadow_OAM[2].x = enemyX;
+    shadow_OAM[2].y = enemyY;
 }
