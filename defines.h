@@ -35,5 +35,6 @@
 
 #define playerSpeed 3
 #define enemySpeed  1
+#define enemyAttackRadius 2
 
 #define charOffset 0x20

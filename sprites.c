@@ -176,15 +176,29 @@ void updatePlayer(void) {
     if(running){
         printPlayerHealth();
     }
+
+    if(playerHealth <= 0){
+        playerDead = 1;
+        running = 0;
+
+        printfTileMap("Press Start");
+
+    }
 }
 
 void printPlayerHealth(){
-    //memset((void*)TILEMAPS, 0x00, 36*36); //clear tilemap
-    //printf("%d", playerHealth);
+    char healthStr[4]; 
+    sprintf(healthStr, "%d", playerHealth);
+
+    printfTileMap(healthStr);
 }
 
 void EnemyAttackPlayer(){
+    playerHealth--;
 
+    if(playerHealth==9){
+        printfTileMap("  ");
+    }
 }
 
 void EnemyfollowPlayer(){
@@ -212,7 +226,7 @@ void updateEnemy(){
     if(running){
         EnemyfollowPlayer();
     }
-    if((playerX - enemyX) < 1){
+    if((playerX - enemyX) < enemyAttackRadius && (playerX - enemyX) > -enemyAttackRadius && (playerY - enemyY) < enemyAttackRadius && (playerY - enemyY) > -enemyAttackRadius ){
         EnemyAttackPlayer();
     }
 

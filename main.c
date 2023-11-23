@@ -6,6 +6,7 @@
 static int playerY = 60;
 static int playerX = 60;
 static int playerHealth = 10;
+static int playerDead = 0;
 
 static int enemyX = 20;
 static int enemyY = 20;
@@ -15,6 +16,7 @@ static int running = 0;
 
 int counter = 0;
 
+#include "characters.c"
 #include "utilities.c"
 #include "controls.c"
 #include "sprites.c"
@@ -23,6 +25,7 @@ void main(void){
 	SPRITES_8x16;
 
     printf("A");
+    populateTileMapsChars();
     disable_interrupts();
 
     DISPLAY_OFF;
@@ -39,11 +42,11 @@ void main(void){
 	SHOW_SPRITES;
 
     
-    printfTileMap("Hello World");
+    printfTileMap("Press Start");
 
 
     while(1){
-
+        
         updatePlayer();
         updateEnemy();
 

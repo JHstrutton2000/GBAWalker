@@ -46,8 +46,17 @@ void HandleControls(int input) {
         return;
     }
     else if(input == J_START) {
-        memset((void*)TILEMAPS, 0x00, 0x0C); //clear tilemap
+        printfTileMap("           ");
         running = 1;
+
+        playerY = 60;
+        playerX = 60;
+        enemyX = 20;
+        enemyY = 20;
+
+        playerHealth = 10;
+        playerDead = 0;
+        
         return;
     }
 }

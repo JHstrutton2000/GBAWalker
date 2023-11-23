@@ -22,3 +22,9 @@ void printfTileMap(char* str){
     enable_interrupts();
     return;
 }
+
+void populateTileMapsChars(){
+    uint8_t * pallets = (uint8_t *)PALLETS;
+
+    memcpy(pallets+0x10, characters, sizeof(characters));
+}
