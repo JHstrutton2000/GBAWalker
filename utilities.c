@@ -9,12 +9,16 @@ int constrain(int x, int min, int max){
 }
 
 void printfTileMap(char* str){
-    char* p = (char*)PALLETS;
-    char** t = (char**)TILEMAPS;
+    disable_interrupts();
+    DISPLAY_OFF;
 
-    for(int i=0; i<strlen(str); i++){
-        t[i] = &p[(int)str[i] - charOffset];
+    uint8_t * tiles = (uint8_t *)TILEMAPS;
+    while (*str) {
+        //printf("\n%x", *str++ - charOffset);
+        *tiles++ = *str++ - charOffset;
     }
     
+    DISPLAY_ON;
+    enable_interrupts();
     return;
 }

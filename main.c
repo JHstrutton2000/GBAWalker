@@ -22,7 +22,9 @@ int counter = 0;
 void main(void){
 	SPRITES_8x16;
 
+    printf("A");
     disable_interrupts();
+
     DISPLAY_OFF;
     LCDC_REG = 0x47;
     BGP_REG = OBP0_REG = OBP1_REG = 0xE4U;
@@ -30,14 +32,15 @@ void main(void){
     memcpy((void*)VRAM, PlayerSprites, sizeof(PlayerSprites));
     memcpy((void*)(VRAM + sizeof(PlayerSprites)), Enemy, sizeof(Enemy));
     
+
     DISPLAY_ON;
     enable_interrupts();
 
 	SHOW_SPRITES;
 
+    
+    printfTileMap("Hello World");
 
-    printf("A");
-    printfTileMap("abcdefghijklmnopqrstuvwxyz");
 
     while(1){
 
