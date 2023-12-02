@@ -31,6 +31,7 @@ void HandleControls(int input) {
                 Walking = 1;
                 break;
             case J_A:
+                playerAttack();
                 break;
             case J_B:
                 break;

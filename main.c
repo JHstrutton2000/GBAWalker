@@ -10,9 +10,13 @@ static int playerDead = 0;
 
 static int enemyX = 20;
 static int enemyY = 20;
+static int enemyXvel = 0;
+static int enemyYvel = 0;
 
 static int enemyMoveScaler = 20;
 static int running = 0;
+
+uint8_t * sprites = (uint8_t *)spriteAttributes;
 
 int counter = 0;
 
@@ -25,7 +29,6 @@ void main(void){
 	SPRITES_8x16;
 
     printf("A");
-    populateTileMapsChars();
     disable_interrupts();
 
     DISPLAY_OFF;

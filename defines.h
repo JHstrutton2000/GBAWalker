@@ -26,6 +26,8 @@
 #define Enemyforward    0x30
 #define Enemybackward   0x32
 
+#define emptyTile        0xFE
+
 //directions
 #define none	 0x00
 #define backward 0x01
@@ -35,6 +37,7 @@
 
 #define playerSpeed 3
 #define enemySpeed  1
+#define enemyAcc    1
 #define enemyAttackRadius 2
 
 #define charOffset 0x20

@@ -14,7 +14,6 @@ void printfTileMap(char* str){
 
     uint8_t * tiles = (uint8_t *)TILEMAPS;
     while (*str) {
-        //printf("\n%x", *str++ - charOffset);
         *tiles++ = *str++ - charOffset;
     }
     
@@ -23,7 +22,7 @@ void printfTileMap(char* str){
     return;
 }
 
-void populateTileMapsChars(){
+void populatePalletChars(){
     uint8_t * pallets = (uint8_t *)PALLETS;
 
     memcpy(pallets+0x10, characters, sizeof(characters));

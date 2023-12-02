@@ -115,6 +115,11 @@ const unsigned char Enemy[] =
 };
 
 void updatePlayer(void) {
+    if(playerDead && (shadow_OAM[0].tile != emptyTile || shadow_OAM[1].tile != emptyTile)){
+        shadow_OAM[0].tile = emptyTile;
+        shadow_OAM[1].tile = emptyTile;
+    }
+
     switch (playerDir)
     {
         case backward:
@@ -186,6 +191,10 @@ void updatePlayer(void) {
     }
 }
 
+void playerAttack(){
+
+}
+
 void printPlayerHealth(){
     char healthStr[4]; 
     sprintf(healthStr, "%d", playerHealth);
@@ -202,8 +211,8 @@ void EnemyAttackPlayer(){
 }
 
 void EnemyfollowPlayer(){
-    int deltaX = constrain((playerX - enemyX), -enemySpeed, enemySpeed);
-    int deltaY = constrain((playerY - enemyY), -enemySpeed, enemySpeed);
+    int deltaX = constrain(playerX - enemyX, -enemyAcc, enemyAcc);
+    int deltaY = constrain(playerY - enemyY, -enemyAcc, enemyAcc);
 
     if(deltaX > 0){
         enemyDir = right;
@@ -218,8 +227,8 @@ void EnemyfollowPlayer(){
         enemyDir = backward;
     }
 
-    enemyX += deltaX;
-    enemyY += deltaY;
+    enemyXvel = constrain(enemyXvel + deltaX, -enemySpeed, enemySpeed);
+    enemyYvel = constrain(enemyYvel + deltaY, -enemySpeed, enemySpeed);
 }
 
 void updateEnemy(){
@@ -247,6 +256,9 @@ void updateEnemy(){
         default:
             break;
     }
+
+    enemyX += enemyXvel;
+    enemyY += enemyYvel;
 
     shadow_OAM[2].x = enemyX;
     shadow_OAM[2].y = enemyY;
