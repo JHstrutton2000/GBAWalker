@@ -3,18 +3,17 @@
 #include <stdio.h> 
 #include <string.h>
 
-static int playerY = 60;
-static int playerX = 60;
-static int playerHealth = 10;
-static int playerDead = 0;
+uint8_t playerY = 60;
+uint8_t playerX = 60;
+int playerHealth = 10;
+int playerDead = 0;
 
-static int enemyX = 20;
-static int enemyY = 20;
-static int enemyXvel = 0;
-static int enemyYvel = 0;
+uint8_t enemyX = 20;
+uint8_t enemyY = 20;
+char enemyXvel = 0;
+char enemyYvel = 0;
 
-static int enemyMoveScaler = 20;
-static int running = 0;
+bool running = false;
 
 uint8_t * sprites = (uint8_t *)spriteAttributes;
 
@@ -44,7 +43,6 @@ void main(void){
 
 	SHOW_SPRITES;
 
-    
     printfTileMap("Press Start");
 
 

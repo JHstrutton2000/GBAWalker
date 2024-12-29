@@ -183,7 +183,7 @@ void updatePlayer(void) {
     }
 
     if(playerHealth <= 0){
-        playerDead = 1;
+        playerDead = false;
         running = 0;
 
         printfTileMap("Press Start");
@@ -235,9 +235,14 @@ void updateEnemy(){
     if(running){
         EnemyfollowPlayer();
     }
-    if((playerX - enemyX) < enemyAttackRadius && (playerX - enemyX) > -enemyAttackRadius && (playerY - enemyY) < enemyAttackRadius && (playerY - enemyY) > -enemyAttackRadius ){
+
+    if (((playerX - enemyX) < enemyAttackRadius) &&
+        ((playerX - enemyX) > -enemyAttackRadius) &&
+        ((playerY - enemyY) < enemyAttackRadius) &&
+        ((playerY - enemyY) > -enemyAttackRadius)) {
         EnemyAttackPlayer();
     }
+
 
     switch (enemyDir)
     {

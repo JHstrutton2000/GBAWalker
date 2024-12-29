@@ -41,3 +41,7 @@
 #define enemyAttackRadius 2
 
 #define charOffset 0x20
+
+#define bool BOOLEAN
+#define true TRUE
+#define false FALSE
